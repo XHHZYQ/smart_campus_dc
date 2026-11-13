@@ -11,9 +11,14 @@ from datetime import date, datetime
 from decimal import Decimal
 from typing import Generic, TypeVar
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_serializer
 
 T = TypeVar("T")
+
+
+def format_datetime(value: datetime | None) -> str | None:
+    """把日期时间统一格式化为 YYYY-MM-DD HH:mm:ss 字符串。"""
+    return value.strftime("%Y-%m-%d %H:%M:%S") if value else None
 
 
 class PageResult(BaseModel, Generic[T]):
@@ -172,6 +177,10 @@ class OperationLogOut(BaseModel):
     success: bool = True
     created_at: datetime | None = None
 
+    @field_serializer("created_at")
+    def serialize_created_at(self, value: datetime | None) -> str | None:
+        return format_datetime(value)
+
 
 class LoginLogOut(BaseModel):
     """登录日志返回体。"""
@@ -185,6 +194,10 @@ class LoginLogOut(BaseModel):
     success: bool = True
     message: str | None = None
     created_at: datetime | None = None
+
+    @field_serializer("created_at")
+    def serialize_created_at(self, value: datetime | None) -> str | None:
+        return format_datetime(value)
 
 
 # ====================================================================

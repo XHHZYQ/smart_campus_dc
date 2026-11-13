@@ -327,6 +327,7 @@ function resetSingleForm() {
 }
 
 function openSingle() {
+  editId.value = null
   resetSingleForm()
   singleVisible.value = true
 }

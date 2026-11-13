@@ -60,15 +60,16 @@ smart-campus-dc/
 
 ```bash
 docker run -d \
-  --name smart-campus-pg \
-  -e POSTGRES_USER=smart_campus \
-  -e POSTGRES_PASSWORD=smart_campus \
-  -e POSTGRES_DB=smart_campus_db \
-  -p 5432:5432 \
+  --name postgresql-container \
+  -e POSTGRES_USER=smart_campus_dc \
+  -e POSTGRES_PASSWORD=smart_campus_dc \
+  -e POSTGRES_DB=smart_campus_dc_db \
+  -p 5433:5432 \
   postgres:16
 ```
 
-> 容器会自动创建数据库 `smart_campus_db` 和用户 `smart_campus`，无需手动建库。
+> 容器名为 `postgresql-container`，会自动创建数据库 `smart_campus_dc_db` 和用户 `smart_campus_dc`，无需手动建库。
+> 已存在的容器直接启动：`docker start postgresql-container`
 
 ### 2. 启动后端
 
